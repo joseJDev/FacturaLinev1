@@ -1,0 +1,28 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Eliminar</h2>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModalDelete()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-center">
+                        ¿Seguro que quieres eliminar al cliente {{ client.first_name }} {{ client.last_name }}?
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModalDelete()">Cerrar</button>
+            <button type="button" class="btn btn-danger" onclick="deleteClient({{client.id}})">Si, Eliminar</button>
+        </div>
+    </div>
+    </div>
+</div>
+

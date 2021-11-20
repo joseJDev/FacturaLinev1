@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+    FacturaLine | Productos
+{% endblock title %}
+
+{% block content %}
+    <!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Productos</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <button 
+                class="text-center btn btn-primary btn-circle"
+                onclick="openCreateProduct('{% url 'factura:create_product' %}')"
+            >
+                <i class="fas fa-plus"></i>
+            </button>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="text-center text-secondary" id="messageError"></h2>
+            <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Valor</th>
+                        <th>Descripcion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createProduct" role="dialog"></div>
+<div class="modal fade" id="editProduct" role="dialog"></div>
+<div class="modal fade" id="deleteProduct" role="dialog"></div>
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'js/products/index.js' %}"></script>
+{% endblock extrajs %}

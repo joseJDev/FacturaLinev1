@@ -1,0 +1,62 @@
+
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Crear Cliente</h4>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModalCreate()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form action="{% url 'factura:create_client' %}" method="POST" id="formClient"> 
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Tipo Documento:</label>
+                    <select name="type_document" class="form-control" id="">
+                        <option value="" selected disabled>Seleccion una opcion</option>
+                        {% for doc in type_doc %}
+                            <option value="{{ doc.0 }}">{{ doc.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">N° Documento:</label>
+                    <input type="text" name="num_doc" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Nombre:</label>
+                    <input type="text" name="first_name" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Apellido:</label>
+                    <input type="text" name="last_name" class="form-control" id="recipient-name" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Nombre Consultorio:</label>
+                    <input type="text" name="name_consultory" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Email:</label>
+                    <input type="text" name="email" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Dirección:</label>
+                    <input type="text" name="direction" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Teléfono:</label>
+                    <input type="text" name="phone" class="form-control" id="recipient-name" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModalCreate()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="createClient()">Guardar Usuario</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+

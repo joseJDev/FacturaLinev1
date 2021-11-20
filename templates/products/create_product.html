@@ -1,0 +1,37 @@
+
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Crear Producto</h4>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModalCreate()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form action="{% url 'factura:create_product' %}" method="POST" id="formProduct"> 
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="recipient-name" class="col-form-label">Nombre:</label>
+                    <input type="text" name="name" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="col-6">
+                    <label for="recipient-name" class="col-form-label">Valor:</label>
+                    <input type="number" name="value" class="form-control" id="recipient-name" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label for="recipient-name" class="col-form-label">Descripción:</label>
+                    <textarea name="description" class="form-control" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModalCreate()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="createProduct()">Guardar Producto</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+

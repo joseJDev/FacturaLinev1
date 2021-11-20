@@ -1,0 +1,64 @@
+
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Actualizar Cliente</h4>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModalEdit()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form action="{% url 'factura:update_client' client.id  %}" method="POST" id="formClient"> 
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Tipo Documento:</label>
+                    <select name="type_document" class="form-control" id="">
+                        <option value="" selected disabled>Seleccion una opcion</option>
+                        {% for doc in type_doc %}
+                            <option value="{{ doc.0 }}">{{ doc.1 }}</option>
+                            {% if doc.0 == client.type_document%}
+                                <option value="{{ doc.0 }}" selected>{{ doc.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">N° Documento:</label>
+                    <input type="text" name="num_doc" class="form-control" id="recipient-name" value="{{ client.num_doc }}" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Nombre:</label>
+                    <input type="text" name="first_name" class="form-control" id="recipient-name" value="{{ client.first_name }}" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Apellido:</label>
+                    <input type="text" name="last_name" class="form-control" id="recipient-name" value="{{ client.last_name }}" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Nombre Consultorio:</label>
+                    <input type="text" name="name_consultory" class="form-control" id="recipient-name" value="{{ client.name_consultory }}" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Email:</label>
+                    <input type="text" name="email" class="form-control" id="recipient-name" value="{{ client.email }}" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Dirección:</label>
+                    <input type="text" name="direction" class="form-control" id="recipient-name" value="{{ client.direction }}" required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="recipient-name" class="col-form-label">Teléfono:</label>
+                    <input type="text" name="phone" class="form-control" id="recipient-name" value="{{ client.phone }}" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModalEdit()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="updateClient({{ client.id }})">Editar Usuario</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>

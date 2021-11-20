@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+    FacturaLine | Clientes
+{% endblock title %}
+
+{% block content %}
+    <!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Clientes</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <button 
+                class="text-center btn btn-primary btn-circle"
+                onclick="openCreateClient('{% url 'factura:create_client' %}')"
+            >
+                <i class="fas fa-user-plus"></i>
+            </button>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <h2 class="text-center text-secondary" id="messageError"></h2>
+            <table class="table table-bordered" id="clientTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo Documento</th>
+                        <th>N° Documento</th>
+                        <th>Nombre Completo</th>
+                        <th>Nombre Consultorio</th>
+                        <th>Email</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createClient" role="dialog"></div>
+<div class="modal fade" id="editClient" role="dialog"></div>
+<div class="modal fade" id="deleteClient" role="dialog"></div>
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'js/clients/index.js' %}"></script>
+{% endblock extrajs %}
