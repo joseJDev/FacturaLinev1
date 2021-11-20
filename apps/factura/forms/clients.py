@@ -2,11 +2,20 @@
 
 # Django
 from django import forms
+from django.core import validators
 
 # Models 
 from apps.factura.models import Client
 
 class ClientForm(forms.ModelForm):
+    phone = forms.CharField(
+        validators=[
+            validators.RegexValidator(
+                '/^([0-9])*$/',
+                message="El numero de telefono no es valido"
+            )
+        ]
+    )
     class Meta:
         model = Client
         exclude = '__all__' 

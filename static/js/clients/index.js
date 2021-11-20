@@ -94,10 +94,10 @@ function createClient(){
             listClients();
             notification(response.message, 'success');
         },
-        error: function(error){
-            console.log(error)
-            // Verificar validaciones
+        error: function(error){            
             // Mostrar los errores en el modal
+            viewErrors(error.responseJSON);
+            disableButton();
         }
     });
 }
@@ -132,9 +132,8 @@ function deleteClient(pk){
             notification(response.message, 'success');
         },
         error: function(error){
-            console.log(error)
-            // Verificar validaciones
-            // Mostrar los errores en el modal
+            let errorResponse = error.responseJSON
+            
         }
     });
 }
@@ -144,3 +143,85 @@ $(document).ready(function (){
     listClients();
 });
 
+function viewErrors(errors){
+    console.log(errors)
+    if(errors.type_document){
+        $('div.error-type-doc').empty();
+
+        errors.type_document.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-type-doc').append(p);
+        });
+    }
+    
+    if(errors.num_doc){
+        $('div.error-doc').empty();
+
+        errors.num_doc.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-doc').append(p);
+        });
+    }
+    
+    if(errors.first_name){
+        $('div.error-name').empty();
+
+        errors.first_name.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-name').append(p);
+        });
+    }
+    
+    if(errors.last_name){
+        $('div.error-last-name').empty();
+
+        errors.last_name.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-last-name').append(p);
+        });
+    }
+    
+    if(errors.name_consultory){
+        $('div.error-name-consultory').empty();
+
+        errors.name_consultory.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-name-consultory').append(p);
+        });
+    }
+    
+    if(errors.email){
+        $('div.error-email').empty();
+
+        errors.email.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-email').append(p);
+        });
+    }
+    
+    if(errors.phone){
+        $('div.error-phone').empty();
+
+        errors.phone.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-phone').append(p);
+        });
+    }
+    
+    if(errors.direction){
+        $('div.error-addres').empty();
+
+        errors.direction.forEach(error => {
+            let p = `<span class="text-danger ">${error.message}</span>`
+            $('div.error-addres').append(p);
+        });
+    }
+}
+
+function disableButton(){
+    $(".save-client").prop('disabled', true);
+
+    setTimeout(() => {
+        $(".save-client").prop('disabled', false);
+    }, 5000);
+}

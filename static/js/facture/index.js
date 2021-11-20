@@ -242,17 +242,74 @@ function deleteProduct(id){
     calculateTotal();
 }
 
+/* Evento cuando escriben en input */
 $( "#payment" ).keyup(function() {
     let payment = parseInt($( "#payment" ).val());
     let totalProducts = parseInt(localStorage.getItem('totalProducts')); 
     let balance = totalProducts - payment
-    let balanceString = balance.toString()
-    let balanceStrFormat = numeral(balance).format()
-    localStorage.setItem('totalBalance', balanceString)
+    let balanceStrFormat = "";
+    console.log(totalProducts)
+    console.log(payment)
+    if(!balance){
+        let balanceString = totalProducts.toString()
+        balanceStrFormat = numeral(totalProducts).format()
+        localStorage.setItem('totalBalance', balanceString)
+    }else{
+        let balanceString = balance.toString()
+        balanceStrFormat = numeral(balance).format()
+        localStorage.setItem('totalBalance', balanceString)
+    }
+
+    // Mostrar balance en el DOM
+    viewBalanceNew(balanceStrFormat);
+
+    // Mostrar abono
+    let paymentStr = payment.toString();
+    paymentStr = numeral(paymentStr).format();
     
+    $('#paymentText').empty();
+
+    const spanText = $(`
+        <span class="text-dark">
+            <b>Abono: </b>
+        </span>
+    `);
+
+    const spanTotal = $(`
+        <span class="text-secondary">
+            <b>$${paymentStr}</b>
+        </span>
+    `);
+
+    $('#paymentText').append(spanText);
+    $('#paymentText').append(spanTotal);
+  });
+
+
+/* Evento cuando se escribe en descuento */
+
+$('#discount').keyup(function(){
+    let discount = parseInt($( "#discount" ).val());
+    let actualBalance = parseInt(localStorage.getItem('totalBalance'));
+    let newBalance = actualBalance - discount
+
+    if(!newBalance){
+        let balanceString = actualBalance.toString()
+        balanceStrFormat = numeral(actualBalance).format()
+        localStorage.setItem('totalBalance', balanceString)
+    }else{
+        let balanceString = newBalance.toString()
+        balanceStrFormat = numeral(newBalance).format()
+        localStorage.setItem('totalBalance', balanceString)
+    }
+
+    // Mostrar balance en el DOM
+    viewBalanceNew(balanceStrFormat);
+});
+
+function viewBalanceNew(balanceStr){
     // Mostrar valor en el DOM
     $('#balance').empty();
-    
 
     const spanText = $(`
         <span class="text-dark">
@@ -262,10 +319,10 @@ $( "#payment" ).keyup(function() {
 
     const spanTotal = $(`
         <span class="text-secondary">
-            <b>$${balanceStrFormat}</b>
+            <b>$${balanceStr}</b>
         </span>
     `);
 
     $('#balance').append(spanText);
     $('#balance').append(spanTotal);
-  });
+}
