@@ -149,7 +149,7 @@ function viewErrors(errors){
         $('div.error-type-doc').empty();
 
         errors.type_document.forEach(error => {
-            let p = `<span class="text-danger ">${error.message}</span>`
+            let p = `<span class="text-danger text-center">${error.message}</span>`
             $('div.error-type-doc').append(p);
         });
     }

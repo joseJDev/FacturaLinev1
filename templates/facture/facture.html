@@ -148,41 +148,19 @@
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight">
                                 <h5 class="p-2 bd-highlight" id="paymentText">
-                                    <span class="text-dark">
-                                        <b>Abono: </b>
-                                    </span>
-                                    <span class="text-secondary" id="paymentText">
-                                    </span>
                                 </h5>
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight">
-                                <h5 class="p-2 bd-highlight" id="">
-                                    <span class="text-dark">
-                                        <b>Descuento: </b>
-                                    </span>
-                                    <span class="text-secondary">
-                                        <b>$100.000</b>
-                                    </span>
+                                <h5 class="p-2 bd-highlight" id="discountText">
                                 </h5>
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight">
-                                <h5 class="p-2 bd-highlight" id="">
-                                    <span class="text-dark">
-                                        <b>Valor cuota: </b>
-                                    </span>
-                                    <span class="text-secondary">
-                                        <b>$291.666</b>
-                                    </span>
+                                <h5 class="p-2 bd-highlight" id="quoteValueText">
                                 </h5>
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight">
-                                <h5 class="p-2 bd-highlight" id="">
-                                    <span class="text-dark">
-                                        <b>N° Cuota: </b>
-                                    </span>
-                                    <span class="text-secondary">
-                                        <b>12</b>
-                                    </span>
+                                <h5 class="p-2 bd-highlight" id="quoteText">
+                                    
                                 </h5>
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight mt-5">
@@ -203,5 +181,11 @@
 {% endblock content %}
 
 {% block extrajs %}
+<script src="{% static 'js/facture/calculations.js' %}"></script>
+<script src="{% static 'js/facture/actions.js' %}"></script>
 <script src="{% static 'js/facture/index.js' %}"></script>
+<script src="{% static 'js/facture/ajax.js' %}"></script>
+<script src="{% static 'js/facture/DOM.js' %}"></script>
+<script src="{% static 'js/facture/events.js' %}"></script>
+<script src="{% static 'js/facture/storage.js' %}"></script>
 {% endblock extrajs %}
