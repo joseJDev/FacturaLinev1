@@ -17,3 +17,7 @@ function getStorage(){
         return []
     }
 }
+
+function clearStorage(){
+    localStorage.clear();
+}

@@ -128,23 +128,9 @@
                                         <option value="select" selected disabled>Selecione una opcion</option>
                                         {% for q in quotes %}
                                             <option value="{{ q }}">{{ q }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-6 col-md-3">
-                                    <button type="button" onclick="generateQuotes()" class="btn btn-primary btn-lg btn-block generate-facture">Factura</button>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <button type="button" class="btn btn-success btn-lg btn-block generate-facture">Recibo</button>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <button type="button" class="btn btn-info btn-lg btn-block generate-facture">Cuotas</button>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <button type="button" class="btn btn-warning btn-lg btn-block generate-facture">Cotizacion</button>
-                                </div>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                             </div>
                             <div class="d-flex flex-row-reverse bd-highlight">
                                 <h5 class="p-2 bd-highlight" id="paymentText">
@@ -166,6 +152,30 @@
                             <div class="d-flex flex-row-reverse bd-highlight mt-5">
                                 <h4 class="p-2 bd-highlight" id="balance">
                                 </h4>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-6">
+                                    <label for="recipient-name" class="text-secondary text-center info-patient">Documento Paciente:</label>
+                                    <input type="text" class="form-control info-patient" name="" id="docPatient">
+                                </div>
+                                <div class="col-6">
+                                    <label for="recipient-name" class="text-secondary text-center info-patient">Nombre Paciente:</label>
+                                    <input type="text" class="form-control info-patient" name="" id="namePatient">
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-6 col-md-3">
+                                    <button type="button" onclick="generateQuotes()" class="btn btn-primary btn-lg btn-block generate-facture">Factura</button>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <button type="button" class="btn btn-success btn-lg btn-block generate-facture">Recibo</button>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <button type="button" class="btn btn-info btn-lg btn-block generate-facture">Cuotas</button>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <button type="button" class="btn btn-warning btn-lg btn-block generate-facture">Cotizacion</button>
+                                </div>
                             </div>
                         </div>
                     </form>

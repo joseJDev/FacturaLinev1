@@ -1,0 +1,16 @@
+{
+    "cliete": 1,
+    "products": [
+        {
+            "id": 1,
+            "count": 2
+        },
+        {
+            "id": 2,
+            "count": 3
+        }
+    ],
+    "quote": 12,
+    "payment": "12000",
+    "discount": "10000"
+}

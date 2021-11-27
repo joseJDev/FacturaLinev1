@@ -9,4 +9,4 @@ from apps.factura.models import FactureLine
 class FactureForm(forms.ModelForm):
     class Meta:
         model = FactureLine
-        exclude = '__all__' 
+        exclude = ['products', 'created', 'modified'] 

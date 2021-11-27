@@ -29,4 +29,3 @@ class Product(FacturaModel):
         name_product = self.name[0:2].upper()
         self.code = "{}{}".format(name_product, count)
         super(Product, self).save(*args, **kwargs)
-        

@@ -15,19 +15,17 @@ class FactureLine(FacturaModel):
         related_name='facture_client', 
         on_delete=models.DO_NOTHING
     )
-    
 
+    payment          = models.IntegerField(null=True, blank=True)
+    balance          = models.IntegerField(null=True, blank=True)
+    value_quote      = models.IntegerField(null=True, blank=True)
+    total_payment    = models.IntegerField(null=True, blank=True)
+    interest         = models.IntegerField(null=True, blank=True)
+    discount         = models.IntegerField(null=True, blank=True)
 
-    payment        = models.IntegerField(null=True, blank=True)
-    balance        = models.IntegerField(null=True, blank=True)
-    total_payment  = models.IntegerField(null=True, blank=True)
-    interest       = models.IntegerField(null=True, blank=True)
-    discount       = models.IntegerField(null=True, blank=True)
-    products = models.ManyToManyField(
-        Product,
-        through='ProductFacture',
-        blank=True
-    )
+    # Campos paciente
+    doc_patient      = models.CharField(max_length=12, null=True, blank=True)
+    fullname_patient = models.CharField(max_length=150, null=True, blank=True)
 
     class Meta:
         db_table = 'facture_line'
@@ -36,9 +34,8 @@ class FactureLine(FacturaModel):
     
 
     def __str__(self) -> str:
-        return '{} - {} - {}'.format(
+        return '{} - {}'.format(
             self.client.first_name,
-            self.product.value,
             self.balance
         )
 
@@ -52,8 +49,8 @@ class QuotaFacture(FacturaModel):
         related_name='quote_facture',
         on_delete=models.DO_NOTHING
     )
-    iva = models.IntegerField()
-    subtotal = models.IntegerField()
+    iva = models.IntegerField(null=True, blank=True)
+    subtotal = models.IntegerField(null=True, blank=True)
 
     class Meta:
         db_table            = 'quota_facture'
@@ -68,7 +65,7 @@ class QuotaFacture(FacturaModel):
         )
 
 
-class ProductFacture(FacturaModel):
+class ProductsFacture(FacturaModel):
     """ Productos adquiridos en una factura """
     num_products = models.IntegerField(default=1)
     
@@ -86,7 +83,6 @@ class ProductFacture(FacturaModel):
         blank=True
     )
 
-    value_total = models.IntegerField()
 
     class Meta:
         db_table            = 'products_facture'
@@ -98,8 +94,3 @@ class ProductFacture(FacturaModel):
             self.product,
             self.facture
         )
-
-    def save(self, *args, **kwargs):
-        value_total = self.num_products * self.product
-        self.value_total = value_total
-        super(Product, self).save(*args, **kwargs)

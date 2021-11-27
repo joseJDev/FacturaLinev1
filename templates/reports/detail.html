@@ -1,0 +1,154 @@
+{% load humanize %}
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Detalle Factura</h4>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeModalEdit()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="text-primary bold text-center">
+                            Cliente
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Documento:</b><span> {{ facture.client.num_doc }}</span>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Nombre:</b><span> {{ facture.client.first_name }} {{ facture.client.last_name }}</span>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Email:</b><span> {{ facture.client.email }}</span>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Consultorio:</b><span> {{ facture.client.name_consultory }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-primary bold text-center">
+                            Paciente
+                        </h3>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Documento:</b><span> {{ facture.doc_patient }}</span>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="size-info">
+                                    <b>Nombre:</b><span> {{ facture.fullname_patient }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h3 class="text-primary">Productos</h3>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Cantidad</th>
+                                    <th>Producto</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                  <tr>
+                                      <th>{{ product.num_products }}</th>
+                                      <th>{{ product.product.name }}</th>
+                                      <th>${{ product.product.value|intcomma }}</th>
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <h5 class="p-2 bd-highlight" id="paymentText">
+                        <span class="text-dark">
+                            <b>Abono: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.payment|intcomma  }}</b>
+                        </span>
+                    </h5>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <h5 class="p-2 bd-highlight" id="discountText">
+                        <span class="text-dark">
+                            <b>Descuento: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.discount|intcomma  }}</b>
+                        </span>
+                    </h5>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <h5 class="p-2 bd-highlight" id="quoteValueText">
+                        <span class="text-dark">
+                            <b>Valor Cuota: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.value_quote|intcomma  }}</b>
+                        </span>
+                    </h5>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <h5 class="p-2 bd-highlight" id="quoteText">
+                        <span class="text-dark">
+                            <b>N° Cuota: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.quota|intcomma  }}</b>
+                        </span>
+                    </h5>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <h5 class="p-2 bd-highlight" id="quoteText">
+                        <span class="text-dark">
+                            <b>Total productos: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.total_payment|intcomma  }}</b>
+                        </span>
+                    </h5>
+                </div>
+                <div class="d-flex flex-row-reverse bd-highlight mt-5">
+                    <h4 class="p-2 bd-highlight" id="balance">
+                        <span class="text-dark">
+                            <b>Total Saldo: </b>
+                        </span>
+                        <span class="text-secondary">
+                            <b>${{ facture.balance|intcomma  }}</b>
+                        </span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/facture-gen-pdf/?facture={{ facture.id }}" target="_blank" class="btn btn-danger">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <button type="button" class="btn btn-secondary" onclick="closeDetailFacture()">Cerrar</button>
+        </div>
+    </div>
+</div>

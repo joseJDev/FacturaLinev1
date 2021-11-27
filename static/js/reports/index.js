@@ -1,3 +1,15 @@
+function openDetailClient(url){
+    console.log('ISASAS')
+    $('#detailFacture').load(url,function(){
+        $(this).modal('show'); 
+    });
+
+}
+
+function closeDetailFacture(){
+    $('#detailFacture').modal('hide');
+}
+
 function listReport(data){
     if(data.length > 0){
         for (let i = 0; i < data.length; i++) {
@@ -5,9 +17,18 @@ function listReport(data){
             row += '<td>' + data[i]['id'] +'</td>'
             row += '<td>' + data[i]['document_client'] +'</td>'
             row += '<td>' + data[i]['name_client'] +'</td>'
-            row += '<td>' + data[i]['name_product'] +'</td>'
-            row += '<td>' + data[i]['value_product'] +'</td>'
-            row += '<td>' + data[i]['balance'] +'</td>'
+            row += '<td>' + data[i]['doc_patient'] +'</td>'
+            row += '<td>' + data[i]['name_patient'] +'</td>'
+            row += '<td> $' + numeral(data[i]['value_product']).format() +'</td>'
+            row += '<td> $' + numeral(data[i]['balance']).format() +'</td>'
+            row += 
+                `<td>
+                    <button class="btn btn-primary btn-sm text-center"
+                        onclick="openDetailClient('/detail-facture/${data[i]['id']}')"
+                    >
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </td>`
             row += '</tr>'
             $('#reportTable tbody').append(row);
         }
