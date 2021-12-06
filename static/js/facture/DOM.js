@@ -60,7 +60,7 @@ function viewBalanceNew(balanceStr){
 
     const spanText = $(`
         <span class="text-dark">
-            <b>Total: </b>
+            <b>Saldo pendiente: </b>
         </span>
     `);
 
