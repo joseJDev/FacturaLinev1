@@ -18,7 +18,6 @@ def generate_facture_quotes(facture, list_products):
     for product in list_products:
         product_value += int(product.num_products) * int(product.product.value)
 
-    print('VALOR P: ', product_value)
 
     # ABONO CLIENTE
     payment = facture.payment
@@ -29,7 +28,6 @@ def generate_facture_quotes(facture, list_products):
     # CALCULAR BALANCE
     balance = (product_value - payment) - discount
 
-    print('BALANCE: ', balance)
 
     # TOTAL CREDITO
     total_credit = balance
@@ -40,7 +38,6 @@ def generate_facture_quotes(facture, list_products):
     # Valor Cuota
     value_quote = round(total_credit / quotes)
 
-    print('VALOR CUATOAS ', value_quote)
 
     # Balance
     balanceFacture = balance

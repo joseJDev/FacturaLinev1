@@ -225,7 +225,7 @@
       </div>
 
       <div id="factura">
-        <h1>Factura N° 0001</h1>
+        <h1>Factura N° {{ facture.n_invoice }}</h1>
         <div class="date">Fecha generacion factura: {{ facture.created }}</div>
         <div class="date">Fecha impresion del documento: {% now "DATETIME_FORMAT" %}</div>
       </div>
@@ -258,7 +258,7 @@
         <br><br>
 
         <table class="table" id="listProducts">
-          <thead class="text-dark">
+          <thead class="text-dark table-secondary">
             <tr>
               <th scope="col" class="text-center">Cantidad</th>
               <th scope="col" class="text-center">Producto</th>
@@ -267,20 +267,20 @@
             </tr>
           </thead>
           <tbody>
-            
+            {% for product in products_facture %}
+              <tr>
+                <td class="text-center">{{ product.num_products }}</td>
+                <td class="text-center">{{ product.product.name }}</td>
+                <td class="text-center">${{ product.total_value|intcomma }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
       </table>
         
         
         <br>
         <div id="invoice">
-          <h1>Totales</h1>
-          <div class="date"><b>Abono:</b> ${{ facture.payment|intcomma }}</div>
-          <div class="date"><b>Descuento:</b> ${{ facture.discount|intcomma }}</div>
-          <div class="date"><b>Valor Cuota:</b> ${{ facture.value_quote|intcomma }}</div>
-          <div class="date"><b>N° Cuotas:</b>{{ facture.quota|intcomma }}</div>
-          <div class="date"><b>Total A Financiar:</b> ${{ facture.balance|intcomma }}</div>
-          <div class="date"><b>Total:</b> ${{ facture.total_payment|intcomma }}</div>
+          <h3 class="text-dark">Total: <span class="text-secondary">${{ facture.total_payment|intcomma }}</span></h3>
         </div>
         
       </div>

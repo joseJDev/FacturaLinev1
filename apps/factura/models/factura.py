@@ -15,7 +15,8 @@ class FactureLine(FacturaModel):
         related_name='facture_client', 
         on_delete=models.DO_NOTHING
     )
-
+    
+    n_invoice        = models.CharField(null=True, blank=True, max_length=255, unique=True)
     payment          = models.IntegerField(null=True, blank=True)
     balance          = models.IntegerField(null=True, blank=True)
     value_quote      = models.IntegerField(null=True, blank=True)
@@ -82,6 +83,8 @@ class ProductsFacture(FacturaModel):
         null=True,
         blank=True
     )
+
+    total_value = models.IntegerField(null=True)
 
 
     class Meta:
