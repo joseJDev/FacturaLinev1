@@ -4,48 +4,64 @@
 from apps.factura.models import QuotaFacture
 
 
-def generate_facture_quotes(facture):
-    print('Entra')
+def generate_facture_quotes(facture, list_products):
     # Borrar cuotas existentes 
     exist_quotes = QuotaFacture.objects.filter(
         facture__id = facture.id
     )
-    print(exist_quotes)
-    exist_quotes.delete()
-
-    # Valor del producto
-    product_value = facture.product.value
-    iva = product_value * 0.19
-    subtotal = product_value - iva
     
+    exist_quotes.delete()
+    
+    # Valor del producto
+    product_value = 0
+    
+    for product in list_products:
+        product_value += int(product.num_products) * int(product.product.value)
+
+    print('VALOR P: ', product_value)
+
     # ABONO CLIENTE
     payment = facture.payment
 
+    # DESCUENTO
+    discount = facture.discount
+
+    # CALCULAR BALANCE
+    balance = (product_value - payment) - discount
+
+    print('BALANCE: ', balance)
+
     # TOTAL CREDITO
-    total_credit = facture.balance
+    total_credit = balance
 
     # Cuaotas PAGO
     quotes = facture.quota
 
     # Valor Cuota
-    value_quote = total_credit / quotes
+    value_quote = round(total_credit / quotes)
+
+    print('VALOR CUATOAS ', value_quote)
 
     # Balance
-    balance = facture.balance
+    balanceFacture = balance
 
     for i in range(1, quotes + 1):
         # Restar balance en base a la cuota
-        balance = balance - value_quote
+        balanceFacture = balanceFacture - value_quote
         
         new_cuote = QuotaFacture.objects.create(
             num_quota = i,
             value     = value_quote,
-            balance   = balance,
-            facture   = facture,
-            iva       = iva,
-            subtotal  = subtotal
+            balance   = balanceFacture,
+            facture   = facture
         )
     
+    # Actualizar info factura
+    facture.balance       = balance
+    facture.total_payment = product_value
+    facture.value_quote   = value_quote
+    facture.save()
+
     final_quotes = QuotaFacture.objects.filter(facture__id = facture.id)
-    
+
     return final_quotes

@@ -6,11 +6,13 @@ function addProduct(){
     let nameProduct = $('#product option:selected').attr("nameP");
     let valueProduct = $('#product option:selected').attr("valueP");
     let amount = $('#amount').val()
+    let id_product = $('#product').val();
     
     // Json
     let total = parseInt(valueProduct) * parseInt(amount);
     const productObj = {
-        id: uuid.v4(), 
+        id: uuid.v4(),
+        id_product,
         nameProduct,
         valueProduct,
         amount,

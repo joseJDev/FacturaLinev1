@@ -4,7 +4,7 @@ from django.views import View, generic
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
-from django.db.models import Count, F, Value as V
+from django.db.models import Count, F, Q, Value as V
 from django.db.models.functions import Concat
 
 # Models 
@@ -53,14 +53,16 @@ class GetReportView(View):
         query = (
             FactureLine.objects
             .filter(
-                client__num_doc = document_client
+                Q(client__num_doc__icontains = document_client) |
+                Q(client__first_name__icontains = document_client) |
+                Q(client__last_name__icontains = document_client) |
+                Q(doc_patient__icontains = document_client) |
+                Q(fullname_patient__icontains = document_client) 
             )
             .annotate(
                 name_client = Concat('client__first_name', V(' '), 'client__last_name'),
                 document_client = F('client__num_doc'),
-                name_product = F('product__name'),
-                value_product = F('product__value'),
-            )
+            ).distinct()
         )
 
         # print(query.first().name_client)
@@ -71,9 +73,10 @@ class GetReportView(View):
                 "id": q.id,
                 "document_client": q.document_client,
                 "name_client": q.name_client,
-                "name_product": q.name_product,
-                "value_product": q.value_product,
-                "balance": q.balance,
+                "doc_patient": q.doc_patient,
+                "name_patient": q.fullname_patient,
+                "value_product": str(q.total_payment),
+                "balance": str(q.balance),
             }
 
             factures.append(facture_json)

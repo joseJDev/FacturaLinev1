@@ -1,7 +1,8 @@
 /* Eventis de los elementos del DOM */
 /* Evento cuando escriben en input */
 $( "#payment" ).keyup(function() {
-    calculateBalance()
+    calculateBalance();
+    viewButtons();
   });
 
 
@@ -9,9 +10,11 @@ $( "#payment" ).keyup(function() {
 
 $('#discount').keyup(function(){
     calculateBalance();
+    viewButtons();
 });
 
 $('#quote').change(function(){
     calculateBalance();
+    viewButtons();
 });
 

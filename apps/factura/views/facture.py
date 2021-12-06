@@ -6,11 +6,13 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 # Models 
 from apps.factura.models import (
     FactureLine, QuotaFacture,
-    Client, Product
+    Client, Product, ProductsFacture
 )
 
 # Forms
@@ -21,7 +23,7 @@ import json
 
 # Utils
 from core.utils.generate_quotes import generate_facture_quotes
-from core.utils.generate_pdf import render_to_pdf
+from core.utils.generate_pdf import render_to_pdf, render_pdf_docraptor
 
 # Config
 from django.conf import settings
@@ -72,6 +74,7 @@ class GetInfoClientView(View):
             return response 
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class GenerateQuotes(View):
     form = FactureForm
     def post(self, request, *args, **kwargs):
@@ -81,18 +84,27 @@ class GenerateQuotes(View):
         
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            
-            # Calcular Balance
-            balance = cleaned_data.get('product').value - cleaned_data.get('payment') 
-            
-            # Guardar informacion de la factura
-            cleaned_data['balance'] = balance
-            cleaned_data['total_payment'] = cleaned_data.get('product').value
 
+            # Guardar info factura
             facture = FactureLine.objects.create(**cleaned_data)
 
+            # Guardar productos
+            products = data.get('product')
+            products = json.loads(products)
+
+            list_products = []
+
+            for product in products:
+                new_product = ProductsFacture.objects.create(
+                    num_products = product['count'],
+                    product = Product.objects.filter(id=product['id']).first(),
+                    facture = facture
+                )
+
+                list_products.append(new_product)
+
             # Generar cuotas
-            final_quotes = generate_facture_quotes(facture)
+            final_quotes = generate_facture_quotes(facture, list_products)
 
             # URL para descargar PDF
             url = settings.DOMAIN+"facture-gen-pdf/?facture={}".format(facture.id)
@@ -117,13 +129,25 @@ class GeneratePDF(View):
         if not facture:
             return redirect('factura:facture')
 
-        final_quotes = QuotaFacture.objects.filter(facture__id = facture_id)
-
         # Generar PDF
-        filename = "{}_{}_cuotas.pdf".format(
+        filename = "{}_{}_factura.pdf".format(
             facture.client.first_name,
             facture.client.last_name,
         )
-        response = render_to_pdf('facture/pdf/quotes.html', {"quotes": final_quotes})
+
+        pdf = render_pdf_docraptor('facture/pdf/facture.html', filename, {"facture": facture})
+        response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename=' + filename
         return response
+
+
+class DetailFactureView(View):
+    template_name = 'reports/detail.html'
+    def get(self, request, *args, **kwargs):
+        facture = FactureLine.objects.filter(id=kwargs.get('pk')).first()
+        products = ProductsFacture.objects.filter(facture__id = facture.id)
+        data = {
+            'facture': facture,
+            'products': products
+        }
+        return render(request, self.template_name, data)

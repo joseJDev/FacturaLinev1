@@ -11,7 +11,7 @@ from .views import (
     ProductDeleteView, FactureView,
     GetInfoClientView, GenerateQuotes,
     GeneratePDF, ReportClientTemplate,
-    GetReportView
+    GetReportView, DetailFactureView
 
 )
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path('facture-get-client/', GetInfoClientView.as_view(), name='facture_get_client'),
     path('facture-gen-quotes/', GenerateQuotes.as_view(), name='facture_gen_quotes'),
     path('facture-gen-pdf/', GeneratePDF.as_view(), name='facture_gen_pdf'),
+    path('detail-facture/<int:pk>', DetailFactureView.as_view(), name='detail_facturee'),
     
     # Reportes 
     path('report/', ReportClientTemplate.as_view(), name='report'),

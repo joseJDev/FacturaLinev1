@@ -39,11 +39,18 @@ function viewError(message, view){
     }
 }
 
-function viewButtons(view){
-    if(view == true){
+function viewButtons(){
+    // Selects llenos
+    let payment = $( "#payment" ).val();
+    let discount = $( "#discount" ).val();
+    let quotes = $( "#quote" ).val();
+
+    if(payment && discount && quotes){
         $('.generate-facture').show();
+        $('.info-patient').show();
     }else{
         $('.generate-facture').hide();
+        $('.info-patient').hide();
     }
 }
 
@@ -95,7 +102,7 @@ function viewDiscount(discountStr){
 
     const spanText = $(`
         <span class="text-dark">
-            <b>Abono: </b>
+            <b>Descuento: </b>
         </span>
     `);
 
@@ -133,19 +140,27 @@ function viewValueQuote(quoteStr){
 function viewQuote(quoteStr){
     
     $('#quoteText').empty();
-
+    
     const spanText = $(`
         <span class="text-dark">
-            <b>N° Cuota: </b>
+        <b>N° Cuota: </b>
         </span>
-    `);
-
+        `);
+        
     const spanTotal = $(`
-        <span class="text-secondary">
-            <b>${quoteStr}</b>
-        </span>
+    <span class="text-secondary">
+    <b>${quoteStr}</b>
+    </span>
     `);
 
     $('#quoteText').append(spanText);
     $('#quoteText').append(spanTotal);
+}
+
+function clearElements(){
+    $('#balance').empty();
+    $('#quoteValueText').empty();
+    $('#paymentText').empty();
+    $('#discountText').empty();
+    $('#quoteText').empty();
 }
