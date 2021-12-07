@@ -24,6 +24,7 @@ import json
 # Utils
 from core.utils.generate_quotes import generate_facture_quotes
 from core.utils.generate_pdf import render_to_pdf, render_pdf_docraptor
+from core.utils.create_consecutive import create_consective
 
 # Config
 from django.conf import settings
@@ -79,11 +80,14 @@ class GenerateQuotes(View):
     form = FactureForm
     def post(self, request, *args, **kwargs):
         data = request.POST
-        print(data)
         form = self.form(data)
         
         if form.is_valid():
             cleaned_data = form.cleaned_data
+
+            # Crear consecutivo
+            n_invoice = create_consective()
+            cleaned_data['n_invoice'] = n_invoice
 
             # Guardar info factura
             facture = FactureLine.objects.create(**cleaned_data)
@@ -95,10 +99,12 @@ class GenerateQuotes(View):
             list_products = []
 
             for product in products:
+                pp = Product.objects.filter(id=product['id']).first()
                 new_product = ProductsFacture.objects.create(
                     num_products = product['count'],
-                    product = Product.objects.filter(id=product['id']).first(),
-                    facture = facture
+                    product = pp,
+                    facture = facture,
+                    total_value = total_value(pp, product['count'])
                 )
 
                 list_products.append(new_product)
@@ -125,6 +131,7 @@ class GeneratePDF(View):
     def get(self, request, *args, **kwargs):
         facture_id = request.GET.get('facture', None)
         facture = FactureLine.objects.filter(id=facture_id).first()
+        products_facture = ProductsFacture.objects.filter(facture__id = facture.id)
 
         if not facture:
             return redirect('factura:facture')
@@ -135,7 +142,13 @@ class GeneratePDF(View):
             facture.client.last_name,
         )
 
-        pdf = render_pdf_docraptor('facture/pdf/facture.html', filename, {"facture": facture})
+        # Data Render
+        data_render = {
+            "facture": facture,
+            "products_facture": products_facture
+        }
+
+        pdf = render_pdf_docraptor('facture/pdf/facture.html', filename, data_render)
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename=' + filename
         return response
@@ -151,3 +164,8 @@ class DetailFactureView(View):
             'products': products
         }
         return render(request, self.template_name, data)
+
+
+
+def total_value(product, count):
+    return int(product.value) * int(count)
