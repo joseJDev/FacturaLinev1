@@ -54,7 +54,7 @@ function generateQuotes(){
         url: '/facture-gen-quotes/',
         type: 'POST',
         success: function (response){
-            url = response['url'];
+            url = response['url_facture'];
             let win =  window.open(url, '_blank');
             win.focus();
             clearValuesInput();
@@ -62,6 +62,12 @@ function generateQuotes(){
             listTableProducts();
             calculateTotal();
             clearElements();
+
+            /* Alerta para redirigir a pagos */
+            setTimeout(() => {
+                alertPayment(response['url_payment']);
+            }, 3000);
+
         },
         error: function(error){
             viewError(error.responseJSON['message'], true)

@@ -113,9 +113,15 @@ class GenerateQuotes(View):
             final_quotes = generate_facture_quotes(facture, list_products)
 
             # URL para descargar PDF
-            url = settings.DOMAIN+"facture-gen-pdf/?facture={}".format(facture.id)
+            url_facture = settings.DOMAIN+"facture-gen-pdf/?facture={}".format(facture.id)
+            url_payment = settings.DOMAIN+"financial-box/{}".format(facture.id)
 
-            response = JsonResponse({'url': url})
+            data_response = {
+                "url_facture": url_facture,
+                "url_payment":url_payment
+            }
+
+            response = JsonResponse(data_response)
             response.status_code = 200
             return response
             

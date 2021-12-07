@@ -97,3 +97,28 @@ class ProductsFacture(FacturaModel):
             self.product,
             self.facture
         )
+
+
+class PaymentsFacture(FacturaModel):
+    type_payment = (
+        ("TC", "Tarjeta de Credito"),
+        ("EF", "Efectivo"),
+        ("TR", "Transferencia")
+    )
+
+    facture = models.ForeignKey(
+        FactureLine,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    type_payment = models.CharField(max_length=10)
+    total_payment = models.IntegerField()
+
+    def __str__(self) -> str:
+        return "{} - {} - {}".format(
+            self.facture.n_invoice,
+            self.type_payment,
+            self.total_payment
+        )
