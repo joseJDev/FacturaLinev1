@@ -12,7 +12,13 @@ from .views import (
     GetInfoClientView, GenerateQuotes,
     GeneratePDF, ReportClientTemplate,
     GetReportView, DetailFactureView,
+<<<<<<< HEAD
     FinancialBoxDetailView
+=======
+   
+
+
+>>>>>>> f115a03812d02b4e607453a612bce546c86503ed
 )
 
 urlpatterns = [
