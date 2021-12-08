@@ -19,14 +19,11 @@ def generate_facture_quotes(facture, list_products):
         product_value += int(product.num_products) * int(product.product.value)
 
 
-    # ABONO CLIENTE
-    payment = facture.payment
-
     # DESCUENTO
     discount = facture.discount
 
     # CALCULAR BALANCE
-    balance = (product_value - payment) - discount
+    balance = product_value - discount
 
 
     # TOTAL CREDITO

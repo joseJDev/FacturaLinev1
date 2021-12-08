@@ -12,13 +12,7 @@ from .views import (
     GetInfoClientView, GenerateQuotes,
     GeneratePDF, ReportClientTemplate,
     GetReportView, DetailFactureView,
-<<<<<<< HEAD
-    FinancialBoxDetailView
-=======
-   
-
-
->>>>>>> f115a03812d02b4e607453a612bce546c86503ed
+    FinancialBoxDetailView, CreateFinancialBoxView, GeneratePDFFinancial
 )
 
 urlpatterns = [
@@ -52,4 +46,6 @@ urlpatterns = [
 
     # Caja
     path('financial-box/<int:pk>', FinancialBoxDetailView.as_view(), name='financial_box'),
+    path('financial-box-create/', CreateFinancialBoxView.as_view(), name='financial_box_create'),
+    path('financial-gen-pdf/', GeneratePDFFinancial.as_view(), name='financial_box_pdf'),
 ]

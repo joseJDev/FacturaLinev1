@@ -4,6 +4,6 @@
 from apps.factura.models import FactureLine
 
 
-def create_consective():
-    factures = FactureLine.objects.all().count()
-    return factures + 1
+def create_consective(model) -> int:
+    count = model.objects.all().count()
+    return count + 1
