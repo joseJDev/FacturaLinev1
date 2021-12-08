@@ -15,7 +15,8 @@ class FactureLine(FacturaModel):
         related_name='facture_client', 
         on_delete=models.DO_NOTHING
     )
-
+    
+    n_invoice        = models.CharField(null=True, blank=True, max_length=255, unique=True)
     payment          = models.IntegerField(null=True, blank=True)
     balance          = models.IntegerField(null=True, blank=True)
     value_quote      = models.IntegerField(null=True, blank=True)
@@ -83,6 +84,8 @@ class ProductsFacture(FacturaModel):
         blank=True
     )
 
+    total_value = models.IntegerField(null=True)
+
 
     class Meta:
         db_table            = 'products_facture'
@@ -94,3 +97,25 @@ class ProductsFacture(FacturaModel):
             self.product,
             self.facture
         )
+
+
+class PaymentsFacture(FacturaModel):
+    TYPE_PAYMENT = (
+        ("TC", "Tarjeta de Credito"),
+        ("EF", "Efectivo"),
+        ("TR", "Transferencia")
+    )
+
+    facture = models.ForeignKey(
+        FactureLine,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    type_payment = models.CharField(max_length=10, choices=TYPE_PAYMENT)
+    total_payment = models.IntegerField()
+    n_consecutive = models.IntegerField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.n_consecutive

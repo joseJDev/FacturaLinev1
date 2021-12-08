@@ -225,8 +225,8 @@
       </div>
 
       <div id="factura">
-        <h1>Factura N° {{ facture.n_invoice }}</h1>
-        <div class="date">Fecha generacion factura: {{ facture.created }}</div>
+        <h1>Recibo N° {{ facture_payment.n_consecutive }}</h1>
+        <div class="date">Fecha generacion recibo: {{ facture_payment.created }}</div>
         <div class="date">Fecha impresion del documento: {% now "DATETIME_FORMAT" %}</div>
       </div>
     </header>
@@ -237,52 +237,32 @@
           <div class="row ">
             <div id="client">
               <div class="to">DOCTOR:</div>
-              <h2 class="name">{{ facture.client.first_name }} {{ facture.client.last_name }}</h2>
-              <div class="address">{{ facture.client.direction }}</div>
-              <div class="email"><a href="mailto:{{ facture.client.email }}">{{ facture.client.email }}</a></div>
+              <h2 class="name">{{ facture_payment.facture.client.first_name }} {{ facture_payment.facture.client.last_name }}</h2>
+              <div class="address">{{ facture_payment.facture.client.direction }}</div>
+              <div class="email"><a href="mailto:{{ facture_payment.facture.client.email }}">{{ facture_payment.facture.client.email }}</a></div>
             </div>
           </div> 
         </div> 
-        <div class="containaer">
+        <div class="container">
           <div class="row">
             <div id="paciente">
               <div class="to">PACIENTE:</div>
-              <h2 class="name">{{ facture.doc_patient }}</h2>
-              <div class="address">{{ facture.fullname_patient }}</div>
-              <div class="email"><a href="mailto:{{ facture.client.email }}">{{ facture.client.email }}</a></div>
+              <h2 class="name">{{ facture_payment.facture.doc_patient }}</h2>
+              <div class="address">{{ facture_payment.facture.fullname_patient }}</div>
+              <div class="email"><a href="mailto:{{ facture_payment.facture.client.email }}">{{ facture_payment.facture.client.email }}</a></div>
             </div>
           </div>
-          
         </div>
-        <br><br>
+        
+        <div class="row mt-5 mb-5">
+            <div class="col-12 text-center">
+                <h4>Se ha abonado ${{ facture_payment.total_payment|intcomma }} a la factura N° {{ facture_payment.facture.n_invoice }}</h4>
+            </div>
+        </div>
 
-        <table class="table" id="listProducts">
-          <thead class="text-dark table-secondary">
-            <tr>
-              <th scope="col" class="text-center">Producto</th>
-              <th scope="col" class="text-center">Cantidad</th>
-              <th scope="col" class="text-center">Valor unitario</th>
-              <th scope="col" class="text-center">Valor Total</th>
-             
-            </tr>
-          </thead>
-          <tbody>
-            {% for product in products_facture %}
-              <tr>
-                <td class="text-center">{{ product.product.name }}</td>
-                <td class="text-center">{{ product.num_products }}</td>
-                <td class="text-center">{{ product.product.value }}</td>
-                <td class="text-center">${{ product.total_value|intcomma }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-      </table>
-        
-        
-        <br>
         <div id="invoice">
-          <p class="text-dark" style="font-size: 18px;" >Descuento: <span class="text-secondary">${{ facture.discount|intcomma }}</span><p>
-          <h3 class="text-dark">Total: <span class="text-secondary">${{ facture.balance|intcomma }}</span></h3>
+          <p class="text-dark" style="font-size: 18px;" >Abono: <span class="text-secondary">${{ facture_payment.total_payment|intcomma }}</span><p>
+          <h3 class="text-dark">Saldo: <span class="text-secondary">${{ facture_payment.facture.balance|intcomma }}</span></h3>
         </div>
         
       </div>
