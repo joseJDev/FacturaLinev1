@@ -56,25 +56,34 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="text-dark">Total: <span class="text-secondary">${{ facture.total_payment|intcomma }}</span></h3>
+                                <h3 class="text-dark">Total: <span class="text-secondary">${{ facture.balance|intcomma }}</span></h3>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row mt-5"><h4 class="text-center">Informacion Recibo</h4></div>
-                            <div class="row mt-4">
-                                <div class="col-11">
-                                    <form action="">
-                                        <input type="hidden" class="form-control" value="{{ facture.id }}">
-                                        <input type="number" class="form-control">
-                                    </form>
+                            <form id="formPayment">
+                                {% csrf_token %}
+                                <div class="row mt-4">
+                                    <div class="col-5">
+                                        <input type="hidden" class="form-control" name="facture" value="{{ facture.id }}">
+                                        <input type="number" class="form-control" name="total_payment" placeholder="Abono...">
+                                        
+                                    </div>
+                                    <div class="col-5">
+                                        <select name="type_payment" id="" class="form-control">
+                                            <option value="" selected disabled>Seleccione un tipo de pago</option>
+                                            {% for pay in type_payment %}
+                                              <option value="{{ pay.0 }}">{{ pay.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-primary" onclick="createPayment()">
+                                            Recibo
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-1">
-                                    <button class="btn btn-primary">
-                                        Recibo
-                                    </button>
-                                </div>
-                            </div>
-                            
+                            </form>
                         </div>
                 </div>
             </div>
@@ -88,11 +97,5 @@
 {% endblock content %}
 
 {% block extrajs %}
-<script src="{% static 'js/facture/calculations.js' %}"></script>
-<script src="{% static 'js/facture/actions.js' %}"></script>
-<script src="{% static 'js/facture/index.js' %}"></script>
-<script src="{% static 'js/facture/ajax.js' %}"></script>
-<script src="{% static 'js/facture/DOM.js' %}"></script>
-<script src="{% static 'js/facture/events.js' %}"></script>
-<script src="{% static 'js/facture/storage.js' %}"></script>
+<script src="{% static 'js/financial_box/ajax.js' %}"></script>
 {% endblock extrajs %}

@@ -20,6 +20,7 @@ from apps.factura.forms import FactureForm
 
 # Python
 import json
+from apps.factura.models.factura import PaymentsFacture
 
 # Utils
 from core.utils.generate_quotes import generate_facture_quotes
@@ -86,7 +87,7 @@ class GenerateQuotes(View):
             cleaned_data = form.cleaned_data
 
             # Crear consecutivo
-            n_invoice = create_consective()
+            n_invoice = create_consective(FactureLine)
             cleaned_data['n_invoice'] = n_invoice
 
             # Guardar info factura
@@ -165,9 +166,11 @@ class DetailFactureView(View):
     def get(self, request, *args, **kwargs):
         facture = FactureLine.objects.filter(id=kwargs.get('pk')).first()
         products = ProductsFacture.objects.filter(facture__id = facture.id)
+        payments_facture = PaymentsFacture.objects.filter(facture__id=facture.id)
         data = {
             'facture': facture,
-            'products': products
+            'products': products,
+            'payment_facture': payments_facture
         }
         return render(request, self.template_name, data)
 

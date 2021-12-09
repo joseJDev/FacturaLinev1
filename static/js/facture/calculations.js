@@ -42,14 +42,8 @@ function calculateBalance(){
     /* Recoger valores de los 3 inputs */
 
     // Inicializar vairables
-    let payment = 0;
     let discount = 0;
     let quotes = 0;
-
-    // abono
-    if(parseInt($( "#payment" ).val())){
-        payment = parseInt($( "#payment" ).val());
-    }
 
     // descuento
     if(parseInt($( "#discount" ).val())){
@@ -63,7 +57,7 @@ function calculateBalance(){
 
     // Calucular balance en base a descuento y abono
     let totalProducts = parseInt(localStorage.getItem('totalProducts')); 
-    let balance = (totalProducts - payment) - discount
+    let balance = totalProducts - discount
     let balanceStrFormat = "";
 
     if(!balance){
@@ -81,9 +75,6 @@ function calculateBalance(){
 
     // Mostrar balance en el DOM
     viewBalanceNew(balanceStrFormat);
-
-    // Mostrar abono en el DOM
-    viewPayment(payment.toString());
 
     // Mostrar descuento en el DOM
     viewDiscount(discount.toString());

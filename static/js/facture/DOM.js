@@ -20,7 +20,6 @@ function clearValuesInput(){
     $('#idClient').val("");
     $('#product').val(null).trigger('change');
     $('#quote').val(null).trigger('change');
-    $('#payment').val("");
     $('#discount').val("");
 }
 
@@ -41,11 +40,10 @@ function viewError(message, view){
 
 function viewButtons(){
     // Selects llenos
-    let payment = $( "#payment" ).val();
     let discount = $( "#discount" ).val();
     let quotes = $( "#quote" ).val();
 
-    if(payment && discount && quotes){
+    if(discount && quotes){
         $('.generate-facture').show();
         $('.info-patient').show();
     }else{
@@ -74,26 +72,6 @@ function viewBalanceNew(balanceStr){
     $('#balance').append(spanTotal);
 }
 
-function viewPayment(paymentStr){
-    paymentStr = numeral(paymentStr).format();
-    
-    $('#paymentText').empty();
-
-    const spanText = $(`
-        <span class="text-dark">
-            <b>Abono: </b>
-        </span>
-    `);
-
-    const spanTotal = $(`
-        <span class="text-secondary">
-            <b>$${paymentStr}</b>
-        </span>
-    `);
-
-    $('#paymentText').append(spanText);
-    $('#paymentText').append(spanTotal);
-}
 
 function viewDiscount(discountStr){
     discountStr = numeral(discountStr).format();

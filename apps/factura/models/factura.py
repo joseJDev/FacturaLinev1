@@ -100,7 +100,7 @@ class ProductsFacture(FacturaModel):
 
 
 class PaymentsFacture(FacturaModel):
-    type_payment = (
+    TYPE_PAYMENT = (
         ("TC", "Tarjeta de Credito"),
         ("EF", "Efectivo"),
         ("TR", "Transferencia")
@@ -113,12 +113,9 @@ class PaymentsFacture(FacturaModel):
         blank=True
     )
 
-    type_payment = models.CharField(max_length=10)
+    type_payment = models.CharField(max_length=10, choices=TYPE_PAYMENT)
     total_payment = models.IntegerField()
+    n_consecutive = models.IntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
-        return "{} - {} - {}".format(
-            self.facture.n_invoice,
-            self.type_payment,
-            self.total_payment
-        )
+        return self.n_consecutive
