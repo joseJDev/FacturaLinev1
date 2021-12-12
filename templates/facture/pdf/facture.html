@@ -101,6 +101,11 @@
       font-size: 1.1em;
       color: #777777;
     }
+    .observation1{
+      border: #555555;
+      border-radius: 2px;
+
+    }
 
     table {
       width: 100%;
@@ -276,25 +281,27 @@
               </tr>
             {% endfor %}
           </tbody>
-      </table>
-        
-        
-        <br>
+        </table><br><br>
+
+        <div class="text ml-4"> Observaciones
+          <p class="text">{{ facture.observation }}<p>
+        </div> <br>
+
         <div id="invoice">
           <p class="text-dark" style="font-size: 18px;" >Descuento: <span class="text-secondary">${{ facture.discount|intcomma }}</span><p>
           <h3 class="text-dark">Total: <span class="text-secondary">${{ facture.balance|intcomma }}</span></h3>
-        </div>
-        
+        </div><br><br>
+
+       
       </div>
-      <div class="">
-        <h5 class="text-center text-primary">"El rico se enseñorea de los pobres,
-        Y el que toma prestado es siervo del que presta."</h5>
+      <div class="">       
+        <h5 class="text-center text-primary">“Únicamente aquellos que se atreven a tener grandes fracasos, terminan consiguiendo grandes éxitos” – Robert F. Kennedy.</h5>
       </div>
       
     </main>
     <br><br>
     <footer>
-      Favor consignar a la cuenta de ahorros bancolombia 10697138233 a nombre de jorge gil
+      Favor consignar a la cuenta de ahorros Bancolombia 10697138233 a nombre de Jorge Gil
     </footer>
   </body>
 </html>

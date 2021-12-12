@@ -27,7 +27,7 @@ class FactureLine(FacturaModel):
     # Campos paciente
     doc_patient      = models.CharField(max_length=12, null=True, blank=True)
     fullname_patient = models.CharField(max_length=150, null=True, blank=True)
-
+    observation      = models.TextField(null=True, blank=True)
     class Meta:
         db_table = 'facture_line'
         verbose_name = 'Factura'

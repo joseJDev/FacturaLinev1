@@ -252,10 +252,18 @@
               <div class="email"><a href="mailto:{{ facture_payment.facture.client.email }}">{{ facture_payment.facture.client.email }}</a></div>
             </div>
           </div>
-        </div>
+        </div><br><br><br>
+
+        <table class="table" id="listProducts">
+          <thead class="text-dark table-secondary">
+            <tr>
+              <th scope="col-8" class="text-center"><h3>Concepto</h3></th>
+              <th scope="col-4" class="text-center"><h3>Valor</h3></th>
+             
+        </table>
         
         <div class="row mt-5 mb-5">
-            <div class="col-12 text-center">
+            <div class="col-12 text-right">
                 <h4>Se ha abonado ${{ facture_payment.total_payment|intcomma }} a la factura N° {{ facture_payment.facture.n_invoice }}</h4>
             </div>
         </div>
@@ -267,14 +275,13 @@
         
       </div>
       <div class="">
-        <h5 class="text-center text-primary">"El rico se enseñorea de los pobres,
-        Y el que toma prestado es siervo del que presta."</h5>
+        <h5 class="text-center text-primary">“Únicamente aquellos que se atreven a tener grandes fracasos, terminan consiguiendo grandes éxitos” – Robert F. Kennedy.</h5>
       </div>
       
     </main>
     <br><br>
     <footer>
-      Favor consignar a la cuenta de ahorros bancolombia 10697138233 a nombre de jorge gil
+      Favor consignar a la cuenta de ahorros Bancolombia 10697138233 a nombre de Jorge Gil
     </footer>
   </body>
 </html>

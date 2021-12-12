@@ -47,6 +47,7 @@ function generateQuotes(){
             'quota': $('#quote').val(),
             'discount': $('#discount').val(),
             'doc_patient': $('#docPatient').val(),
+            'observation': $('#observations').val(),
             'fullname_patient': $('#namePatient').val(),
             'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val()
         },
