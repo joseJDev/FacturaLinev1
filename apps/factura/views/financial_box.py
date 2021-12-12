@@ -24,7 +24,49 @@ import json
 # Utils
 from core.utils.generate_pdf import render_pdf_docraptor
 from core.utils.create_consecutive import create_consective
+from core.utils.format_date import format_dates
 
+
+
+class ReportBoxTemplateView(View):
+    template_name = 'financial_box/report_box.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class ReportBoxView(View):
+    def get(self, request, *args, **kwargs):
+        first_date = request.GET.get('first_date')
+        last_date = request.GET.get('last_date')
+
+        f_first_date, f_last_date = format_dates(first_date, last_date)
+        
+        query = PaymentsFacture.objects.filter(
+            created__date__range = [f_first_date, f_last_date]
+        )
+
+        data = []
+        total_value = 0
+
+        for q in query:
+            total_value += q.total_payment
+            data.append({
+                "id": q.id,
+                "client_fullname": "{} - {}".format(
+                    q.facture.client.first_name if q.facture else "",
+                    q.facture.client.last_name if q.facture else ""
+                ),
+                "consultory": q.facture.client.name_consultory if q.facture else "",
+                "date": q.created,
+                "value": q.total_payment
+            })
+
+        # Convert to json
+
+        response = JsonResponse({'data': data, "total": total_value})
+        response.status_code = 200
+        
+        return response
 
 class FinancialBoxDetailView(View):
     template_name = 'financial_box/financial.html'
@@ -38,8 +80,6 @@ class FinancialBoxDetailView(View):
             'type_payment': PaymentsFacture.TYPE_PAYMENT
         }
         return render(request, self.template_name, data)
-
-    
 
 
 class CreateFinancialBoxView(View):

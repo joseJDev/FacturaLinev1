@@ -12,7 +12,9 @@ from .views import (
     GetInfoClientView, GenerateQuotes,
     GeneratePDF, ReportClientTemplate,
     GetReportView, DetailFactureView,
-    FinancialBoxDetailView, CreateFinancialBoxView, GeneratePDFFinancial
+    FinancialBoxDetailView, CreateFinancialBoxView, 
+    GeneratePDFFinancial, ReportBoxTemplateView, 
+    ReportBoxView
 )
 
 urlpatterns = [
@@ -48,4 +50,6 @@ urlpatterns = [
     path('financial-box/<int:pk>', FinancialBoxDetailView.as_view(), name='financial_box'),
     path('financial-box-create/', CreateFinancialBoxView.as_view(), name='financial_box_create'),
     path('financial-gen-pdf/', GeneratePDFFinancial.as_view(), name='financial_box_pdf'),
+    path('report-box/', ReportBoxTemplateView.as_view(), name='report_box'),
+    path('get-report-box/', ReportBoxView.as_view(), name='get_report_box'),
 ]

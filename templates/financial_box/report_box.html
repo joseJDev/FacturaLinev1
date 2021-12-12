@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    FacturaLine | Factura
+{% endblock title %}
+
+{% block content %}
+    <!-- Page Heading -->
+
+<h1 class="h3 mb-2 text-gray-800">Reporte de Caja</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <input type="date" class="form-control" name="" id="first_date">
+                </div>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" name="" id="last_date">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" onclick="reportBox()">Q</button>
+                </div>
+            </div>
+        <div class="card-body mt-5">
+        <div class="table-responsive">
+            <h2 class="text-center text-secondary" id="messageError"></h2>
+            <table class="table table-bordered" id="reportTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Cliente</th>
+                        <th>Consultorio</th>
+                        <th>Fecha</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div id="totalValue">
+                <!-- Aqui va el total -->
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="button btn btn-danger ">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+        </h6>
+    </div>
+</div>
+
+<div class="modal fade" id="detailFacture" role="dialog"></div>
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'js/financial_box/ajax.js' %}"></script>
+<script src="{% static 'js/financial_box/DOM.js' %}"></script>
+{% endblock extrajs %}
